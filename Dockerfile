@@ -1,9 +1,8 @@
-FROM --platform=${TARGETOS}/${TARGETARCH} docker-artifactory.spectrumflow.net/dm-docker/debian:stable-slim
+FROM --platform=${TARGETOS}/${TARGETARCH} debian:stable-slim
 
 MAINTAINER Lucious Johnny Cheng
 
 USER root
-
 
 ARG KUBE_VERSION
 ARG HELM_VERSION
