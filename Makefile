@@ -8,8 +8,8 @@ include .env
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
 
-DOCKER_IMAGE ?= docker-artifactory.spectrumflow.net/dm-docker/digitalmarketing/devops/bfe-helper
-DOCKER_TAG ?= 1.0.0
+DOCKER_IMAGE ?= jcheng919/ljc-cli
+DOCKER_TAG ?= 1.0.1
 
 docker_build:
 	@docker buildx build --platform=linux/amd64 \
@@ -24,3 +24,4 @@ docker_build:
 docker_push:
 	# Push to DockerHub
 	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
+
