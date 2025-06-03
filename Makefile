@@ -9,16 +9,18 @@ VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
 
 DOCKER_IMAGE ?= jcheng919/ljc-cli
-DOCKER_TAG ?= 1.0.1
+DOCKER_TAG ?= 1.0.3
 
 docker_build:
-	@docker buildx build --platform=linux/amd64 \
+	@docker buildx build --platform=${TARGETOS}/${TARGETARCH} \
 	  --build-arg KUBE_VERSION=$(KUBE_VERSION) \
 	  --build-arg HELM_VERSION=$(HELM_VERSION) \
 	  --build-arg AWS_VERSION=$(AWS_VERSION) \
 	  --build-arg TARGETOS=${TARGETOS} \
 	  --build-arg TARGETARCH=${TARGETARCH} \
 	  --build-arg YQ_VERSION=$(YQ_VERSION) \
+	  --build-arg VERACODE_CLI_VERSION=$(VERACODE_CLI_VERSION) \
+	  --build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
 	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 
 docker_push:
