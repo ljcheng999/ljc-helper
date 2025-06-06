@@ -20,6 +20,8 @@ RUN apt-get update && </dev/null DEBIAN_FRONTEND=noninteractive apt-get install 
     && curl -fL https://install-cli.jfrog.io | sh \
     # && curl -fsS https://tools.veracode.com/veracode-cli/install | VERACODE_CLI_VERSION=${VERACODE_CLI_VERSION} sh \
     && curl -LO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${TARGETOS}_${TARGETARCH}.zip \
+    && curl -fsSL https://get.docker.com -o get-docker.sh \
+    && sh ./get-docker.sh \
     && unzip ${AWS_VERSION}.zip \
     && unzip terraform_${TERRAFORM_VERSION}_${TARGETOS}_${TARGETARCH}.zip -d /usr/local/bin \
     && rm helm-v${HELM_VERSION}-${TARGETOS}-${TARGETARCH}.tar.gz \

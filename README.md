@@ -20,11 +20,12 @@ Currently, the docker image is based on **linux/amd64**
 - [jq](https://jqlang.org/)
 - [vim](https://www.vim.org/)
 - [zip/unzip](https://www.geeksforgeeks.org/how-to-install-zip-and-unzip-in-linux/)
+- [docker](https://docs.docker.com/get-started/)
 
 ## Usage
 
 ```
-docker pull jcheng919/ljc-cli:1.0.3
+docker pull jcheng919/ljc-cli:1.0.4
 ```
 
 ## License
