@@ -1,6 +1,6 @@
-# ljc-cli
+# ljc-helper
 
-ljc-cli is a docker image that could empower the CI/CD pipeline. It has multiple CLIs so that way you do not have to worry some command line does not other commandline
+ljc-helper is a docker image that could empower the CI/CD pipeline. It has multiple CLIs so that way you do not have to worry some command line does not other commandline
 
 ## Docker Arch
 
@@ -25,7 +25,7 @@ Currently, the docker image is based on **linux/amd64**
 ## Usage
 
 ```
-docker pull jcheng919/ljc-cli:1.0.4
+docker pull jcheng919/ljc-helper:1.0.4
 ```
 
 ## License
