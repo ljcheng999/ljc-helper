@@ -1,10 +1,12 @@
 name: "docker build and push for ljc-helper"
 
 on:
-  push:
-    tags:
-      - main
-      - "*"
+  workflow_dispatch:
+
+  # push:
+  #   tags:
+  #     - main
+  #     - "*"
 
 env:
   DOCKER_FILE_LOCATION: ./Dockerfile
