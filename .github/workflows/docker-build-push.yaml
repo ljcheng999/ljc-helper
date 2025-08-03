@@ -1,0 +1,28 @@
+name: "docker build and push for ljc-helper"
+
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  DOCKER_FILE_LOCATION: ./Dockerfile
+
+jobs:
+  vars:
+    runs-on: ubuntu-latest
+    outputs:
+      DOCKER_FILE_LOCATION: ${{ env.DOCKER_FILE_LOCATION }}
+    steps:
+      - run: echo "Exposing env vars"
+
+  build-push-docker:
+    needs: vars
+    uses: ljcheng999/cicd-pipeline/.github/workflows/docker-build-push.yaml@main
+    secrets: inherit
+    with:
+      DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
+    # outputs:
+    #   branch: ${{ env.DOCKER_FILE_LOCATION }} # simple variable
+    #   repository: ${{ steps.variables.outputs.repository }} # complex variabl
+    # uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
