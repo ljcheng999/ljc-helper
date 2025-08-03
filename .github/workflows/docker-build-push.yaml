@@ -16,13 +16,9 @@ jobs:
     steps:
       - run: echo "Exposing env vars"
 
-  build-push-docker:
-    needs: vars
-    uses: ljcheng999/cicd-pipeline/.github/workflows/docker-build-push.yaml@main
-    secrets: inherit
-    with:
-      DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
-    # outputs:
-    #   branch: ${{ env.DOCKER_FILE_LOCATION }} # simple variable
-    #   repository: ${{ steps.variables.outputs.repository }} # complex variabl
-    # uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
+  # build-push-docker:
+  #   needs: vars
+  #   uses: ljcheng999/cicd-pipeline/.github/workflows/docker-build-push.yaml@main
+  #   secrets: inherit
+  #   with:
+  #     DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
