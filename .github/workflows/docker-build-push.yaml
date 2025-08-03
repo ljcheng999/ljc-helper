@@ -3,6 +3,7 @@ name: "docker build and push for ljc-helper"
 on:
   push:
     tags:
+      - main
       - "*"
 
 env:
