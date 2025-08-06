@@ -21,7 +21,8 @@ env:
   TARGETOS: linux
   TARGETARCH: amd64
   DOCKER_FILE_LOCATION: ./Dockerfile
-  DOCKER_TAG_VERSION: "jcheng919/ljc-helper:1.0.5"
+  DOCKER_REPO: "jcheng919/ljc-helper"
+  DOCKER_TAG: "1.0.5"
   VERACODE_CLI_VERSION: "2.40.0"
   TERRAFORM_VERSION: "1.12.1"
   KUBE_VERSION: "1.32.0"
@@ -36,13 +37,15 @@ jobs:
       TARGETOS: ${{ env.TARGETOS }}
       TARGETARCH: ${{ env.TARGETARCH }}
       DOCKER_FILE_LOCATION: ${{ env.DOCKER_FILE_LOCATION }}
+      DOCKER_REPO: ${{ env.DOCKER_REPO }}
+      DOCKER_TAG: ${{ env.DOCKER_TAG }}
+      ### Dynamic
       VERACODE_CLI_VERSION: ${{ env.VERACODE_CLI_VERSION }}
       TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
       KUBE_VERSION: ${{ env.KUBE_VERSION }}
       HELM_VERSION: ${{ env.HELM_VERSION }}
       AWS_VERSION: ${{ env.AWS_VERSION }}
       YQ_VERSION: ${{ env.YQ_VERSION }}
-      DOCKER_TAG_VERSION: ${{ env.DOCKER_TAG_VERSION }}
     steps:
       - run: echo "Exposing env vars"
 
@@ -54,7 +57,8 @@ jobs:
       TARGETOS: ${{ needs.vars.outputs.TARGETOS }}
       TARGETARCH: ${{ needs.vars.outputs.TARGETARCH }}
       DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
-      DOCKER_TAG_VERSION: ${{ needs.vars.outputs.DOCKER_TAG_VERSION }}
+      DOCKER_REPO: ${{ needs.vars.outputs.DOCKER_REPO }}
+      DOCKER_TAG: ${{ needs.vars.outputs.DOCKER_TAG }}
       BUILD_ARGS: |
         VERACODE_CLI_VERSION=${{ needs.vars.outputs.VERACODE_CLI_VERSION }}
         TERRAFORM_VERSION=${{ needs.vars.outputs.TERRAFORM_VERSION }}
