@@ -25,20 +25,22 @@ env:
   HELM_VERSION: "3.18.2"
   AWS_VERSION: awscliv2
   YQ_VERSION: "4.44.6"
+  DOCKER_TAG_VERSION: "1.0.5"
 
 jobs:
   vars:
     runs-on: ubuntu-latest
     outputs:
-      DOCKER_FILE_LOCATION: ${{ env.DOCKER_FILE_LOCATION }}
       TARGETOS: ${{ env.TARGETOS }}
       TARGETARCH: ${{ env.TARGETARCH }}
+      DOCKER_FILE_LOCATION: ${{ env.DOCKER_FILE_LOCATION }}
       VERACODE_CLI_VERSION: ${{ env.VERACODE_CLI_VERSION }}
       TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
       KUBE_VERSION: ${{ env.KUBE_VERSION }}
       HELM_VERSION: ${{ env.HELM_VERSION }}
       AWS_VERSION: ${{ env.AWS_VERSION }}
       YQ_VERSION: ${{ env.YQ_VERSION }}
+      DOCKER_TAG_VERSION: ${{ env.DOCKER_TAG_VERSION }}
     steps:
       - run: echo "Exposing env vars"
 
@@ -47,15 +49,26 @@ jobs:
     name: "Calling docker build and push"
     uses: ljcheng999/cicd-pipeline/.github/workflows/reusable_docker_build_push.yaml@main
     with:
-      DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
       TARGETOS: ${{ needs.vars.outputs.TARGETOS }}
       TARGETARCH: ${{ needs.vars.outputs.TARGETARCH }}
-      VERACODE_CLI_VERSION: ${{ needs.vars.outputs.VERACODE_CLI_VERSION }}
-      TERRAFORM_VERSION: ${{ needs.vars.outputs.TERRAFORM_VERSION }}
-      KUBE_VERSION: ${{ needs.vars.outputs.KUBE_VERSION }}
-      HELM_VERSION: ${{ needs.vars.outputs.HELM_VERSION }}
-      AWS_VERSION: ${{ needs.vars.outputs.AWS_VERSION }}
-      YQ_VERSION: ${{ needs.vars.outputs.YQ_VERSION }}
+      DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
+
+      # VERACODE_CLI_VERSION: ${{ needs.vars.outputs.VERACODE_CLI_VERSION }}
+      # TERRAFORM_VERSION: ${{ needs.vars.outputs.TERRAFORM_VERSION }}
+      # KUBE_VERSION: ${{ needs.vars.outputs.KUBE_VERSION }}
+      # HELM_VERSION: ${{ needs.vars.outputs.HELM_VERSION }}
+      # AWS_VERSION: ${{ needs.vars.outputs.AWS_VERSION }}
+      # YQ_VERSION: ${{ needs.vars.outputs.YQ_VERSION }}
+      # DOCKER_TAG_VERSION: ${{ needs.vars.outputs.DOCKER_TAG_VERSION }}
+
+      BUILD_ARGS: |
+        VERACODE_CLI_VERSION=${{ needs.vars.outputs.VERACODE_CLI_VERSION }}
+        TERRAFORM_VERSION=${{ needs.vars.outputs.TERRAFORM_VERSION }}
+        KUBE_VERSION=${{ needs.vars.outputs.KUBE_VERSION }}
+        HELM_VERSION=${{ needs.vars.outputs.HELM_VERSION }}
+        AWS_VERSION=${{ needs.vars.outputs.AWS_VERSION }}
+        YQ_VERSION=${{ needs.vars.outputs.YQ_VERSION }}
+        DOCKER_TAG_VERSION=${{ needs.vars.outputs.DOCKER_TAG_VERSION }}
     secrets:
       REPO_NAME: ${{ secrets.REPO_NAME }}
       USERNAME: ${{ secrets.USERNAME }}
