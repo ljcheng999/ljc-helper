@@ -25,5 +25,5 @@ jobs:
     uses: ljcheng999/cicd-pipeline/.github/workflows/docker-build-push.yaml@main
     with:
       DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
-      REPO_NAME: ${{ secrets.REPO_NAME }}
+      repo-name: ${{ secrets.REPO_NAME }}
     secrets: inherit
