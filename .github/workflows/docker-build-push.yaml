@@ -1,29 +1,65 @@
-name: "calling workflow - docker build and push for ljc-helper"
+### Reference: https://github.com/orgs/community/discussions/26671
+
+name: "docker build and push calling workflow"
 
 on:
   push:
     branches:
       - "*"
+  # pull_request:
+  #   branches: [<which branches to run on>]
+  # workflow_dispatch:
+  #   inputs:
+  #     docker_tag_version:
+  #       description: "Tag version of the docker image"
 
+### (on 08/06/25) Because we do not want to set up env in settings from caller and the environment from main workflow does not extend to
+### the reusable workflow it calls in Github, so this is a workaround
 env:
+  TARGETOS: linux
+  TARGETARCH: amd64
   DOCKER_FILE_LOCATION: ./Dockerfile
+  VERACODE_CLI_VERSION: "2.40.0"
+  TERRAFORM_VERSION: "1.12.1"
+  KUBE_VERSION: "1.32.0"
+  HELM_VERSION: "3.18.2"
+  AWS_VERSION: awscliv2
+  YQ_VERSION: "4.44.6"
 
 jobs:
   vars:
     runs-on: ubuntu-latest
     outputs:
       DOCKER_FILE_LOCATION: ${{ env.DOCKER_FILE_LOCATION }}
+      TARGETOS: ${{ env.TARGETOS }}
+      TARGETARCH: ${{ env.TARGETARCH }}
+      VERACODE_CLI_VERSION: ${{ env.VERACODE_CLI_VERSION }}
+      TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
+      KUBE_VERSION: ${{ env.KUBE_VERSION }}
+      HELM_VERSION: ${{ env.HELM_VERSION }}
+      AWS_VERSION: ${{ env.AWS_VERSION }}
+      YQ_VERSION: ${{ env.YQ_VERSION }}
     steps:
       - run: echo "Exposing env vars"
 
   build-push-docker:
     needs: vars
     name: "Calling docker build and push"
-    uses: ljcheng999/cicd-pipeline/.github/workflows/reuse-docker-build-push.yaml@main
+    uses: ljcheng999/cicd-pipeline/.github/workflows/reusable_docker_build_push.yaml@main
     with:
       DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
+      TARGETOS: ${{ needs.vars.outputs.TARGETOS }}
+      TARGETARCH: ${{ needs.vars.outputs.TARGETARCH }}
+      VERACODE_CLI_VERSION: ${{ needs.vars.outputs.VERACODE_CLI_VERSION }}
+      TERRAFORM_VERSION: ${{ needs.vars.outputs.TERRAFORM_VERSION }}
+      KUBE_VERSION: ${{ needs.vars.outputs.KUBE_VERSION }}
+      HELM_VERSION: ${{ needs.vars.outputs.HELM_VERSION }}
+      AWS_VERSION: ${{ needs.vars.outputs.AWS_VERSION }}
+      YQ_VERSION: ${{ needs.vars.outputs.YQ_VERSION }}
     secrets:
-      repo-name: ${{ secrets.REPO_NAME }}
+      REPO_NAME: ${{ secrets.REPO_NAME }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
     # with:
     #   DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
     #   build-args: |
