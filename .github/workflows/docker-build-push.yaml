@@ -1,4 +1,4 @@
-name: "docker build and push for ljc-helper"
+name: "calling workflow - docker build and push for ljc-helper"
 
 on:
   # workflow_dispatch:
@@ -22,8 +22,13 @@ jobs:
   build-push-docker:
     needs: vars
     name: "Calling docker build and push"
-    uses: ljcheng999/cicd-pipeline/.github/workflows/docker-build-push.yaml@main
+    uses: ljcheng999/cicd-pipeline/.github/workflows/reuse-docker-build-push.yaml@main
     with:
       DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
+    secrets:
       repo-name: ${{ secrets.REPO_NAME }}
-    secrets: inherit
+    # with:
+    #   DOCKER_FILE_LOCATION: ${{ needs.vars.outputs.DOCKER_FILE_LOCATION }}
+    #   build-args: |
+    #     REPO_NAME=${{ secrets.REPO_NAME }}
+    # secrets: inherit
