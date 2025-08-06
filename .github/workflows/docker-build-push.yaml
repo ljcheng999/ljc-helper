@@ -1,8 +1,6 @@
 name: "calling workflow - docker build and push for ljc-helper"
 
 on:
-  # workflow_dispatch:
-
   push:
     branches:
       - "*"
