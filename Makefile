@@ -8,7 +8,7 @@ include .env
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
 
-DOCKER_IMAGE ?= jcheng919/ljc-cli
+DOCKER_IMAGE ?= jcheng919/ljc-helper
 DOCKER_TAG ?= 1.0.4
 
 docker_build:
